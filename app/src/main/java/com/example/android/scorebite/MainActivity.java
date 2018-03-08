@@ -3,6 +3,8 @@ package com.example.android.scorebite;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,10 +16,25 @@ public class MainActivity extends AppCompatActivity {
     int damage2 = 4;
     int damage3 = 7;
 
+    ImageView img;
+    Animation animation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        animation = AnimationUtils.loadAnimation(this, R.anim.blink);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            public void onAnimationStart(Animation animation) {}
+            public void onAnimationRepeat(Animation animation) {}
+            public void onAnimationEnd(Animation animation) {
+                img.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    public void flash(){
+        img.setVisibility(View.VISIBLE);
+        img.startAnimation(animation);
     }
 
     /**
@@ -25,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
      */
 
     public void displayForCreatureB(int hit_points) {
-        TextView hit_pointsView = (TextView) findViewById(R.id.hit_points_b);
+        TextView hit_pointsView = findViewById(R.id.hit_points_b);
         hit_pointsView.setText(String.valueOf(hit_points));
     }
 
@@ -34,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
      */
 
     public void displayForCreatureA(int hit_points) {
-        TextView hit_pointsView = (TextView) findViewById(R.id.hit_points_a);
+        TextView hit_pointsView = findViewById(R.id.hit_points_a);
         hit_pointsView.setText(String.valueOf(hit_points));
     }
 
@@ -43,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
      */
 
     public void displaySpecialMessage(String stat_change) {
-        TextView stat_changeView = (TextView) findViewById(R.id.special_message);
-        stat_changeView.setText(String.format(stat_change));
+        TextView stat_changeView = findViewById(R.id.special_message);
+        stat_changeView.setText(stat_change);
     }
 
     /**
@@ -54,14 +71,13 @@ public class MainActivity extends AppCompatActivity {
     public void hitResultsA() {
         if (HPB <= 0) {
             displayForCreatureB(0);
-            ImageView creatureB = (ImageView) findViewById(R.id.creatureB);
+            ImageView creatureB = findViewById(R.id.creatureB);
             creatureB.setVisibility(View.INVISIBLE);
             displaySpecialMessage("Player 1 wins!\nPlease click 'Full Heal' to play again!");
         } else {
             displayForCreatureB(HPB);
-            /** ImageView got_hit_B = (ImageView) findViewById(R.id.strike2);
-            got_hit_B.setVisibility(View.VISIBLE);
-            got_hit_B.setVisibility(View.INVISIBLE); **/
+            img = findViewById(R.id.strike2);
+            flash();
         }
     }
 
@@ -91,14 +107,13 @@ public class MainActivity extends AppCompatActivity {
     public void hitResultsB() {
         if (HPA <= 0) {
             displayForCreatureA(0);
-            ImageView creatureA = (ImageView) findViewById(R.id.creatureA);
+            ImageView creatureA = findViewById(R.id.creatureA);
             creatureA.setVisibility(View.INVISIBLE);
             displaySpecialMessage("Player 2 wins!\nPlease click 'Full Heal' to play again!");
         } else {
             displayForCreatureA(HPA);
-            /** ImageView got_hit_A = (ImageView) findViewById(R.id.strike1);
-            got_hit_A.setVisibility(View.VISIBLE);
-            got_hit_A.setVisibility(View.INVISIBLE); **/
+            img = findViewById(R.id.strike1);
+            flash();
         }
     }
 
@@ -126,8 +141,8 @@ public class MainActivity extends AppCompatActivity {
         HPB = 50;
         displayForCreatureB(HPB);
         displayForCreatureA(HPA);
-        ImageView creatureA = (ImageView) findViewById(R.id.creatureA);
-        ImageView creatureB = (ImageView) findViewById(R.id.creatureB);
+        ImageView creatureA = findViewById(R.id.creatureA);
+        ImageView creatureB = findViewById(R.id.creatureB);
         creatureA.setVisibility(View.VISIBLE);
         creatureB.setVisibility(View.VISIBLE);
         displaySpecialMessage("");

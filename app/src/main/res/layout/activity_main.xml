@@ -30,13 +30,12 @@
             android:layout_alignParentRight="true"
             android:src="@drawable/creature_2" />
 
-        <!--
         <ImageView
             android:id="@+id/strike1"
             android:layout_width="128dp"
             android:layout_height="128dp"
             android:src="@drawable/damage_strike"
-            android:visibility="invisible" />
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/strike2"
@@ -44,9 +43,7 @@
             android:layout_height="128dp"
             android:layout_alignParentRight="true"
             android:src="@drawable/damage_strike"
-            android:visibility="invisible" />
-
-            -->
+            android:visibility="gone" />
 
     </RelativeLayout>
 
