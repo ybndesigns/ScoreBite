@@ -5,8 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     int damage1 = 2;
     int damage2 = 4;
     int damage3 = 7;
+    String specialMessage;
 
     ImageView img;
     Animation animation;
@@ -56,13 +59,42 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Displaying a special message upon winning
+     * Disables all playable buttons
      */
 
-    public void displaySpecialMessage(String stat_change) {
-        TextView stat_changeView = findViewById(R.id.special_message);
-        stat_changeView.setText(stat_change);
+    public void disableButtons() {
+        Button attackA1 = findViewById(R.id.attack_A1);
+        Button attackA2 = findViewById(R.id.attack_A2);
+        Button attackA3 = findViewById(R.id.attack_A3);
+        Button attackB1 = findViewById(R.id.attack_B1);
+        Button attackB2 = findViewById(R.id.attack_B2);
+        Button attackB3 = findViewById(R.id.attack_B3);
+        attackA1.setEnabled(false);
+        attackA2.setEnabled(false);
+        attackA3.setEnabled(false);
+        attackB1.setEnabled(false);
+        attackB2.setEnabled(false);
+        attackB3.setEnabled(false);
     }
+
+    /**
+     * Enables all playable buttons
+     */
+    public void enableButtons() {
+        Button attackA1 = findViewById(R.id.attack_A1);
+        Button attackA2 = findViewById(R.id.attack_A2);
+        Button attackA3 = findViewById(R.id.attack_A3);
+        Button attackB1 = findViewById(R.id.attack_B1);
+        Button attackB2 = findViewById(R.id.attack_B2);
+        Button attackB3 = findViewById(R.id.attack_B3);
+        attackA1.setEnabled(true);
+        attackA2.setEnabled(true);
+        attackA3.setEnabled(true);
+        attackB1.setEnabled(true);
+        attackB2.setEnabled(true);
+        attackB3.setEnabled(true);
+    }
+
 
     /**
      * Repeat method for attacks by Player 1
@@ -73,7 +105,9 @@ public class MainActivity extends AppCompatActivity {
             displayForCreatureB(0);
             ImageView creatureB = findViewById(R.id.creatureB);
             creatureB.setVisibility(View.INVISIBLE);
-            displaySpecialMessage("Player 1 wins!\nPlease click 'Full Heal' to play again!");
+            specialMessage = ("Player 1 wins!\nPlease click 'Full Heal' to play again!");
+            disableButtons();
+            Toast.makeText(this, specialMessage, Toast.LENGTH_LONG).show();
         } else {
             displayForCreatureB(HPB);
             img = findViewById(R.id.strike2);
@@ -109,7 +143,9 @@ public class MainActivity extends AppCompatActivity {
             displayForCreatureA(0);
             ImageView creatureA = findViewById(R.id.creatureA);
             creatureA.setVisibility(View.INVISIBLE);
-            displaySpecialMessage("Player 2 wins!\nPlease click 'Full Heal' to play again!");
+            specialMessage = ("Player 2 wins!\nPlease click 'Full Heal' to play again!");
+            disableButtons();
+            Toast.makeText(this, specialMessage, Toast.LENGTH_LONG).show();
         } else {
             displayForCreatureA(HPA);
             img = findViewById(R.id.strike1);
@@ -145,6 +181,6 @@ public class MainActivity extends AppCompatActivity {
         ImageView creatureB = findViewById(R.id.creatureB);
         creatureA.setVisibility(View.VISIBLE);
         creatureB.setVisibility(View.VISIBLE);
-        displaySpecialMessage("");
+        enableButtons();
     }
 }
